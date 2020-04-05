@@ -16,11 +16,15 @@ let textArea = document.querySelector("textarea");
 //она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
 //так я изучил на практике, что такое этот this и зачем он нужен
 function Submitting() {
-    newElement = document.createElement('li');
+    let newElement = document.createElement('li');
     planList.append(newElement);
     newElement.classList.add('plan-list-item');
     newElement.textContent = textArea.value;
     textArea.value = '';
+    let newElement2 = document.createElement('button');
+    newElement.append(newElement2);
+    newElement2.classList.add('close-button');
+    newElement2.textContent = 'x';
 };
 
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
