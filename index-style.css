@@ -59,8 +59,17 @@ body {
     /* height: 20px;
     width: 20px; */
     border: none;
-    background-color: #a37d7d;
+    background-color: rgba(134, 82, 82, 0.404);
+    color: #3a3a3a;
+}
+
+.close-button:hover {
+    background-color: rgba(134, 82, 82, 0.616);
     color: black;
+}
+
+.close-button:active {
+    background-color: rgb(134, 82, 82);
 }
 
 .planner-form {
