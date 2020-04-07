@@ -11,20 +11,21 @@ let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
 let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector("textarea");
+let 
 
 //сейчас я создаю функцию, которая делает блок с созданием и отправкой комментария/плана из поля для ввода
 //она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
 //так я изучил на практике, что такое этот this и зачем он нужен
 function Submitting() {
-    let newElement = document.createElement('li');
-    planList.append(newElement);
-    newElement.classList.add('plan-list-item');
-    newElement.textContent = textArea.value;
+    let planListItem = document.createElement('li');
+    planList.append(planListItem);
+    planListItem.classList.add('plan-list-item');
+    planListItem.textContent = textArea.value;
     textArea.value = '';
-    let newElement2 = document.createElement('button');
-    newElement.append(newElement2);
-    newElement2.classList.add('close-button');
-    newElement2.textContent = 'x';
+    let closeButton = document.createElement('button');
+    planListItem.append(closeButton);
+    closeButton.classList.add('close-button');
+    closeButton.textContent = 'x';
 };
 
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
@@ -38,3 +39,4 @@ buttonSubmit.onclick = function(evt) {
     evt.preventDefault();//это нужно для того, чтобы при нажатии на кнопку, которая располагается в форме, текст в <textarea> не отправлялся куда-то там, а добавлялся в созданный li.
     this.submitting = Submitting();
 };
+
