@@ -25,10 +25,9 @@ function Submitting() {
     planListItem.append(closeButton);
     closeButton.classList.add('close-button');
     closeButton.textContent = 'x';
-
     closeButton.onclick = function() {
         planList.removeChild(planListItem);
-    }
+    };
 };
 
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
