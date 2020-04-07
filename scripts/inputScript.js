@@ -11,11 +11,13 @@ let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
 let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector("textarea");
+let contentArea = document.querySelector("main");
 
 //сейчас я создаю функцию, которая делает блок с созданием и отправкой комментария/плана из поля для ввода
 //она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
 //так я изучил на практике, что такое этот this и зачем он нужен
 function Submitting() {
+    contentArea.classList.add('index-main');
     let planListItem = document.createElement('li');
     planList.append(planListItem);
     planListItem.classList.add('plan-list-item');
@@ -49,5 +51,5 @@ buttonSubmit.onclick = function(evt) {
     }
     else {
         alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
-    }
+    };
 };
