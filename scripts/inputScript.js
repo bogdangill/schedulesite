@@ -33,11 +33,21 @@ function Submitting() {
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
     if (event.code == 'Enter' && event.ctrlKey) {
         //сейчас будет ссылка на ту самую функцию. удобно, что ее можно вызывать хоть где и хоть сколько, не копируя и вставляя ее каждый раз
-        this.submitting = Submitting();
+        if (textArea.value != '') {
+            this.submitting = Submitting();
+        }
+        else {
+            alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
+        }
     }
 });
 
 buttonSubmit.onclick = function(evt) {
     evt.preventDefault();//это нужно для того, чтобы при нажатии на кнопку, которая располагается в форме, текст в <textarea> не отправлялся куда-то там, а добавлялся в созданный li.
-    this.submitting = Submitting();
+    if (textArea.value != '') {
+        this.submitting = Submitting();
+    }
+    else {
+        alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
+    }
 };
