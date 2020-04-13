@@ -10,25 +10,39 @@
 let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
 let buttonSubmit = document.querySelector(".btn-submit");
-let textArea = document.querySelector("textarea");
+let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main");
 
 //сейчас я создаю функцию, которая делает блок с созданием и отправкой комментария/плана из поля для ввода
 //она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
 //так я изучил на практике, что такое этот this и зачем он нужен
-function Submitting() {
+function Items() {
     contentArea.classList.add('index-main');
+
     let planListItem = document.createElement('li');
     planList.append(planListItem);
     planListItem.classList.add('plan-list-item');
-    planListItem.textContent = textArea.value;
+
+    let itemContent = document.createElement('p');
+    planListItem.append(itemContent);
+    itemContent.textContent = textArea.value;
     textArea.value = '';
+
     let closeButton = document.createElement('button');
     planListItem.append(closeButton);
     closeButton.classList.add('close-button');
     closeButton.textContent = 'x';
+
     closeButton.onclick = function() {
         planList.removeChild(planListItem);
+    };
+
+    let editButton = document.createElement('button');
+    planListItem.append(editButton);
+    editButton.classList.add('edit-button');
+
+    editButton.onclick = function() {
+        itemContent.innerHTML = textArea.value;
     };
 };
 
@@ -36,7 +50,7 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
     if (event.code == 'Enter' && event.ctrlKey) {
         //сейчас будет ссылка на ту самую функцию. удобно, что ее можно вызывать хоть где и хоть сколько, не копируя и вставляя ее каждый раз
         if (textArea.value != '') {
-            this.submitting = Submitting();
+            this.items = Items();
         }
         else {
             alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
@@ -47,7 +61,7 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
 buttonSubmit.onclick = function(evt) {
     evt.preventDefault();//это нужно для того, чтобы при нажатии на кнопку, которая располагается в форме, текст в <textarea> не отправлялся куда-то там, а добавлялся в созданный li.
     if (textArea.value != '') {
-        this.submitting = Submitting();
+        this.items = Items();
     }
     else {
         alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
