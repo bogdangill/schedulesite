@@ -66,6 +66,10 @@ body {
     background-color: #f4f6f5;
 }
 
+textarea {
+    resize: none;
+}
+
 .close-button {
     cursor: pointer;
     position: absolute;
