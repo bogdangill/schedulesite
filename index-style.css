@@ -66,6 +66,10 @@ body {
     background-color: #f4f6f5;
 }
 
+.plan-list-item p {
+    display: inline;
+}
+
 textarea {
     resize: none;
 }
