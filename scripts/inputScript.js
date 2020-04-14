@@ -13,9 +13,17 @@ let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main");
 
+//функция по активации поля ввода во время загрузки страницы. обработчик событий onload вставлен в разметку как
+//аттрибут body
+
+function initialFocus() {
+    textArea.focus();
+};
+
 //сейчас я создаю функцию, которая делает блок с созданием и отправкой комментария/плана из поля для ввода
 //она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
 //так я изучил на практике, что такое этот this и зачем он нужен
+
 function Items() {
     contentArea.classList.add('index-main');
 
@@ -37,12 +45,37 @@ function Items() {
         planList.removeChild(planListItem);
     };
 
-    let editButton = document.createElement('button');
+    let editButton = document.createElement('button');//кнопка для изменения содержимого ячейки
     planListItem.append(editButton);
     editButton.classList.add('edit-button');
 
     editButton.onclick = function() {
-        itemContent.innerHTML = textArea.value;
+        //событие по клику для изменения текстового содержимого ячейки плана
+        let editSpace = document.createElement('textarea');//создаю новый элемент для редактирования
+        editSpace.setAttribute('rows', '3');
+        editSpace.setAttribute('cols', '55');
+        editSpace.classList.add('edit-space');
+        planListItem.insertBefore(editSpace, itemContent);//вставляю его перед <p>, который хочу заменить
+        editSpace.value = itemContent.textContent;//переношу туда текстовое содержимое
+        planListItem.removeChild(itemContent);//удаляю <p>
+        editSpace.focus();
+        buttonSubmit.disabled = true;
+        closeButton.disabled = true;
+        planListItem.removeChild(editButton);
+        let approveButton = document.createElement('button');
+        planListItem.append(approveButton);
+        approveButton.classList.add('approve-button');
+
+        approveButton.onclick = function() {
+            let itemContent = document.createElement('p');
+            planListItem.append(itemContent);
+            planListItem.insertBefore(itemContent, editSpace);
+            itemContent.textContent = editSpace.value;
+            planListItem.removeChild(editSpace);
+            planListItem.removeChild(approveButton);
+            buttonSubmit.disabled = false;
+            closeButton.disabled = false;
+        };
     };
 };
 
