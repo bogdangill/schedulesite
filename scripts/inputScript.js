@@ -3,8 +3,6 @@
 //сначала я использовал изученный на htmlacademy алгоритм по реализации работы кнопки submitbutton
 //потом я решил добавить сценарий-метод на весь документ с горячими клавишами(изучил на learnjavascript)
 //когда у меня это получилось, то я решил упростить код и избавиться от копипасты основного алгоритма функции
-//и изучил this(спасибо статье на хабре). даже конструкторы с классами оказались необязательны(которые я так
-//до конца и не понял).
 //(03/04/20) вонючий карантин, денег нет, никуда не выйти..
 
 let planList = document.querySelector(".plan-list");
@@ -13,6 +11,12 @@ let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main");
 
+let planListItem = document.createElement('li');
+let itemContent = document.createElement('p');
+let closeButton = document.createElement('button');
+let editButton = document.createElement('button');//кнопка для изменения содержимого ячейки
+let approveButton = document.createElement('button');
+
 //функция по активации поля ввода во время загрузки страницы. обработчик событий onload вставлен в разметку как
 //аттрибут body
 
@@ -20,70 +24,28 @@ function initialFocus() {
     textArea.focus();
 };
 
-//сейчас я создаю функцию, которая делает блок с созданием и отправкой комментария/плана из поля для ввода
-//она общая и не выполняется в сценарии скрипта(висит в памяти), пока ее не вызовут через ссылку this
-//так я изучил на практике, что такое этот this и зачем он нужен
-
-function Items() {
+function appendItems() {
     contentArea.classList.add('index-main');
 
-    let planListItem = document.createElement('li');
     planList.append(planListItem);
     planListItem.classList.add('plan-list-item');
 
-    let itemContent = document.createElement('p');
     planListItem.append(itemContent);
     itemContent.textContent = textArea.value;
     textArea.value = '';
 
-    let closeButton = document.createElement('button');
     planListItem.append(closeButton);
     closeButton.classList.add('close-button');
     closeButton.textContent = 'x';
 
-    closeButton.onclick = function() {
-        planList.removeChild(planListItem);
-    };
-
-    let editButton = document.createElement('button');//кнопка для изменения содержимого ячейки
     planListItem.append(editButton);
     editButton.classList.add('edit-button');
-
-    editButton.onclick = function() {
-        //событие по клику для изменения текстового содержимого ячейки плана
-        let editSpace = document.createElement('textarea');//создаю новый элемент для редактирования
-        editSpace.setAttribute('rows', '3');
-        editSpace.setAttribute('cols', '55');
-        editSpace.classList.add('edit-space');
-        planListItem.insertBefore(editSpace, itemContent);//вставляю его перед <p>, который хочу заменить
-        editSpace.value = itemContent.textContent;//переношу туда текстовое содержимое
-        planListItem.removeChild(itemContent);//удаляю <p>
-        editSpace.focus();
-        buttonSubmit.disabled = true;
-        closeButton.disabled = true;
-        planListItem.removeChild(editButton);
-        let approveButton = document.createElement('button');
-        planListItem.append(approveButton);
-        approveButton.classList.add('approve-button');
-
-        approveButton.onclick = function() {
-            let itemContent = document.createElement('p');
-            planListItem.append(itemContent);
-            planListItem.insertBefore(itemContent, editSpace);
-            itemContent.textContent = editSpace.value;
-            planListItem.removeChild(editSpace);
-            planListItem.removeChild(approveButton);
-            buttonSubmit.disabled = false;
-            closeButton.disabled = false;
-        };
-    };
 };
 
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
     if (event.code == 'Enter' && event.ctrlKey) {
-        //сейчас будет ссылка на ту самую функцию. удобно, что ее можно вызывать хоть где и хоть сколько, не копируя и вставляя ее каждый раз
         if (textArea.value != '') {
-            this.items = Items();
+            appendItems();
         }
         else {
             alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
@@ -94,9 +56,21 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
 buttonSubmit.onclick = function(evt) {
     evt.preventDefault();//это нужно для того, чтобы при нажатии на кнопку, которая располагается в форме, текст в <textarea> не отправлялся куда-то там, а добавлялся в созданный li.
     if (textArea.value != '') {
-        this.items = Items();
+        appendItems();
     }
     else {
         alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
     };
+};
+
+closeButton.onclick = function() {
+    planList.removeChild(planListItem);
+};
+
+editButton.onclick = function() {
+    //событие по клику для изменения текстового содержимого ячейки плана
+    textArea.value = itemContent.textContent;//переношу туда текстовое содержимое
+    textArea.focus();
+    closeButton.disabled = true;
+    // editButton.classList.toggle('hidden-element');
 };
