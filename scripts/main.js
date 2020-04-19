@@ -35,6 +35,14 @@ function createAndEditItems() {
     planListItem.append(editButton);
     editButton.classList.add('edit-button');
 
+    let addButton = document.createElement('button');
+    planListItem.append(addButton);
+    addButton.classList.add('add-button');
+
+    let subList = document.createElement('ul');
+    planListItem.append(subList);
+    subList.classList.add('sub-list');
+
     closeButton.onclick = function() {
         planList.removeChild(planListItem);
     };
@@ -53,6 +61,13 @@ function createAndEditItems() {
                 itemContent.textContent = edited;
             };
         };
+    };
+
+    addButton.onclick = function() {
+        let subItem = document.createElement('li');
+        subList.append(subItem);
+        subItem.classList.add('sub-item');
+        subItem.textContent = 'тестовая ячейка';
     };
 };
 

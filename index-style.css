@@ -43,8 +43,8 @@ body {
 }
 
 .sub-list {
-    margin: 5px;
-    margin-top: 10px;
+    margin: 15px;
+    margin-top: 5px;
     list-style-position: inside;
     padding: 0;
     list-style: none;
@@ -144,17 +144,17 @@ textarea {
     color: #3a3a3a;
 }
 
-.approve-button {
+.add-button {
     cursor: pointer;
     position: absolute;
     bottom: 0;
-    right: 0;
+    left: 0;
     margin: 0;
     padding: 0;
     height: 20px;
     width: 20px;
     border: none;
-    background-color: lightskyblue; 
+    background-color: #8e8790; 
 }
 
 .sub-close-button {
