@@ -59,6 +59,7 @@ body {
 
 .sub-item::before {
     content: '- ';
+    vertical-align: top;
 }
 
 .plan-list-item {
@@ -84,11 +85,21 @@ body {
     vertical-align: top;
 }
 
-.plan-list-item p {
+.item-content {
     display: inline-block;
     max-width: 420px;
     margin: 0;
     margin: 0 20px;
+    padding: 0;
+    white-space: pre-line;
+    overflow-x: hidden; /*прячу сплошной текст, вылезающий за рамки*/
+    vertical-align: bottom;
+}
+
+.sub-item-content {
+    display: inline-block;
+    max-width: 380px;
+    margin: 0;
     padding: 0;
     white-space: pre-line;
     overflow-x: hidden; /*прячу сплошной текст, вылезающий за рамки*/
