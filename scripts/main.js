@@ -6,6 +6,9 @@ let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main")
 
+let i = 0; //   /____ каунтеры для условных сценариев
+let x = 0; //   \
+
 
 //функция по активации поля ввода во время загрузки страницы. обработчик событий onload вставлен в разметку как
 //аттрибут body
@@ -23,6 +26,7 @@ function createAndEditItems() {
 
     let itemContent = document.createElement('p');
     planListItem.append(itemContent);
+    itemContent.classList.add('item-content');
     itemContent.textContent = textArea.value;
     textArea.value = '';
 
@@ -38,13 +42,20 @@ function createAndEditItems() {
     let addButton = document.createElement('button');
     planListItem.append(addButton);
     addButton.classList.add('add-button');
+    addButton.textContent = '+';
+
+    x++;
+    // console.log(x);
 
     let subList = document.createElement('ul');
-    planListItem.append(subList);
-    subList.classList.add('sub-list');
 
     closeButton.onclick = function() {
         planList.removeChild(planListItem);
+        x--;
+        // console.log(x);
+        if (x == 0) {
+            contentArea.classList.remove('index-main');
+        };
     };
 
     editButton.onclick = function() {
@@ -64,10 +75,67 @@ function createAndEditItems() {
     };
 
     addButton.onclick = function() {
-        let subItem = document.createElement('li');
-        subList.append(subItem);
-        subItem.classList.add('sub-item');
-        subItem.textContent = 'тестовая ячейка';
+        let addSub = prompt('введи содержание подпункта: ');
+        if (addSub != null) {
+            planListItem.append(subList);
+            subList.classList.add('sub-list');
+
+            let subItem = document.createElement('li');
+            subList.append(subItem);
+            subItem.classList.add('sub-item');
+
+            let itemContent = document.createElement('p');
+            subItem.append(itemContent);
+            itemContent.classList.add('sub-item-content');
+
+            let subClose = document.createElement('button');
+            subItem.append(subClose);
+            subClose.classList.add('sub-close-button');
+            subClose.textContent = 'x';
+
+            let subEdit = document.createElement('button');
+            subItem.append(subEdit);
+            subEdit.classList.add('sub-edit-button');
+
+            if (addSub != '') {
+                itemContent.textContent = addSub;
+                i++;
+                // console.log(i);
+            };
+
+            for (;((addSub == '') && (addSub != null));) {
+                alert('нет, ну ты введи хоть что-то..');
+                addSub = prompt('введи содержание подпункта: ');
+                if ((addSub != '') && (addSub != null)) {
+                    itemContent.textContent = addSub;
+                    i++;
+                    // console.log(i);
+                };
+            };
+
+            subEdit.onclick = function() {
+                let edited = prompt('редактируй содержимое подпункта здесь: ');
+                if ((edited != '') && (edited != null)) {
+                    itemContent.textContent = edited;
+                };
+                for (;((edited == '') && (edited != null));) {
+                    alert('нет, ну ты введи хоть что-то..');
+                    edited = prompt('редактируй содержимое подпункта здесь: ');
+                    if ((edited != '') && (edited != null)) {
+                        itemContent.textContent = edited;
+                    };
+                };
+            }
+
+            subClose.onclick = function() {
+                subList.removeChild(subItem);
+                i--;
+                // console.log(i);
+                if (i == 0) {
+                    planListItem.removeChild(subList);
+                };
+            };
+        };
     };
 };
 
