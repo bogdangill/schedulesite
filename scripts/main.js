@@ -76,7 +76,8 @@ function createAndEditItems() {
 
     addButton.onclick = function() {
         let addSub = prompt('введи содержание подпункта: ');
-        if (addSub != null) {
+        
+        if ((addSub != null) && (addSub != '')) {
             planListItem.append(subList);
             subList.classList.add('sub-list');
 
@@ -87,6 +88,8 @@ function createAndEditItems() {
             let itemContent = document.createElement('p');
             subItem.append(itemContent);
             itemContent.classList.add('sub-item-content');
+            itemContent.textContent = addSub;
+            i++;
 
             let subClose = document.createElement('button');
             subItem.append(subClose);
@@ -96,22 +99,6 @@ function createAndEditItems() {
             let subEdit = document.createElement('button');
             subItem.append(subEdit);
             subEdit.classList.add('sub-edit-button');
-
-            if (addSub != '') {
-                itemContent.textContent = addSub;
-                i++;
-                // console.log(i);
-            };
-
-            for (;((addSub == '') && (addSub != null));) {
-                alert('нет, ну ты введи хоть что-то..');
-                addSub = prompt('введи содержание подпункта: ');
-                if ((addSub != '') && (addSub != null)) {
-                    itemContent.textContent = addSub;
-                    i++;
-                    // console.log(i);
-                };
-            };
 
             subEdit.onclick = function() {
                 let edited = prompt('редактируй содержимое подпункта здесь: ');
@@ -135,6 +122,8 @@ function createAndEditItems() {
                     planListItem.removeChild(subList);
                 };
             };
+        } else {
+            if (addSub != null) alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
         };
     };
 };
