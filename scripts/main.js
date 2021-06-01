@@ -2,27 +2,15 @@
 
 let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
-let buttonSubmit = document.querySelector(".btn-submit");
 let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main")
+
+const errorEmpty = 'Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..';
 
 let i = 0; //   /____ каунтеры для условных сценариев
 let x = 0; //   \
 
-
-//функция по активации поля ввода во время загрузки страницы. обработчик событий onload вставлен в разметку как
-//аттрибут body
-
-function initialFocus() {
-    textArea.focus();
-};
-
-function additionalFocus() {
-    textArea.focus();
-};
-
 function createAndEditItems() {
-    contentArea.classList.add('index-main');
 
     let planListItem = document.createElement('li');
     planList.append(planListItem);
@@ -82,7 +70,7 @@ function createAndEditItems() {
         let addSub = prompt('введи содержание подпункта: ');
 
         for(;((addSub != null) && (addSub == ''));) {
-            alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
+            alert(errorEmpty);
             addSub = prompt('введи содержание подпункта: ');
             if ((addSub != null) && (addSub != '')) break;
         };
@@ -147,12 +135,7 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
     };
 });
 
-buttonSubmit.onclick = function(evt) {
-    evt.preventDefault();//это нужно для того, чтобы при нажатии на кнопку, которая располагается в форме, текст в <textarea> не отправлялся куда-то там, а добавлялся в созданный li.
-    if (textArea.value != '') {
-        createAndEditItems();
-    }
-    else {
-        alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
-    };
-};
+plannerForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    textArea.value !== '' ? createAndEditItems() : alert(errorEmpty);
+})
