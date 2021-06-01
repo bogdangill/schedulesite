@@ -5,7 +5,12 @@ let plannerForm = document.querySelector(".planner-form");
 let textArea = document.querySelector(".main-textarea");
 let contentArea = document.querySelector("main")
 
-const errorEmpty = 'Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..';
+const messages = {
+    errorEmpty: 'Пожалуйста, заполните поле ввода...',
+    editHint: 'Редактируйте содержимое ячейки здесь: ',
+    subItemHint: 'Введите содержимое подпункта: ',
+    subItemEdit: 'Редактируйте содержимое подпункта здесь: ',
+}
 
 let i = 0; //   /____ каунтеры для условных сценариев
 let x = 0; //   \
@@ -53,13 +58,13 @@ function createAndEditItems() {
     editButton.onclick = function() {
         //события по клику для изменения текстового содержимого ячейки плана
         //сделал через диалоговые окна браузера, мб потом прикручу это через отдельный сценарий с разметкой и стилями
-        let edited = prompt('редактируй содержимое ячейки здесь: ');
+        let edited = prompt(messages.editHint);
         if ((edited != '') && (edited != null)) {
             itemContent.textContent = edited;
         };
         for (;((edited == '') && (edited != null));) {
-            alert('нет, ну ты введи хоть что-то..');
-            edited = prompt('редактируй содержимое ячейки здесь: ');
+            alert(messages.errorEmpty);
+            edited = prompt(messages.editHint);
             if ((edited != '') && (edited != null)) {
                 itemContent.textContent = edited;
             };
@@ -67,11 +72,11 @@ function createAndEditItems() {
     };
 
     addButton.onclick = function() {
-        let addSub = prompt('введи содержание подпункта: ');
+        let addSub = prompt(messages.subItemHint);
 
         for(;((addSub != null) && (addSub == ''));) {
             alert(errorEmpty);
-            addSub = prompt('введи содержание подпункта: ');
+            addSub = prompt(messages.subItemHint);
             if ((addSub != null) && (addSub != '')) break;
         };
 
@@ -100,13 +105,13 @@ function createAndEditItems() {
         subEdit.classList.add('sub-edit-button');
 
         subEdit.onclick = function() {
-            let edited = prompt('редактируй содержимое подпункта здесь: ');
+            let edited = prompt(messages.subItemEdit);
             if ((edited != '') && (edited != null)) {
                 itemContent.textContent = edited;
             };
             for (;((edited == '') && (edited != null));) {
-                alert('нет, ну ты введи хоть что-то..');
-                edited = prompt('редактируй содержимое подпункта здесь: ');
+                alert(messages.errorEmpty);
+                edited = prompt(messages.subItemEdit);
                 if ((edited != '') && (edited != null)) {
                     itemContent.textContent = edited;
                 };
@@ -130,12 +135,12 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
             createAndEditItems();
         }
         else {
-            alert('Пожалуйста, заполни поле ввода, ячейка плана не может быть пустой..');
+            alert(messages.errorEmpty);
         };
     };
 });
 
 plannerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    textArea.value !== '' ? createAndEditItems() : alert(errorEmpty);
+    textArea.value !== '' ? createAndEditItems() : alert(messages.errorEmpty);
 })
