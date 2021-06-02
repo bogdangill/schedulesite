@@ -17,12 +17,41 @@ const MESSAGE = {
 let i = 0; //   /____ каунтеры для условных сценариев
 let x = 0; //   \
 
+function deleteItem(parent) {
+    let delBtn = parent.querySelector(".close-button");
+
+    delBtn.addEventListener('click', function () {
+        parent.remove();
+    });
+}
+
+function editItem(parent) {
+    let editBtn = parent.querySelector(".edit-button");
+    let itemContent = parent.querySelector(".item-content");
+
+    editBtn.addEventListener('click', () => {
+        let text = prompt(MESSAGE.editHint);
+
+        if ((text !== '') && (text !== null)) {
+            itemContent.textContent = text;
+        }
+
+        while (text === '' && text !== null) {
+            alert(MESSAGE.errorEmpty);
+            text = prompt(MESSAGE.editHint);
+        }
+    })
+}
+
 function createItem(template, parent) {
     let templateInner = template.children[0];
     let item = templateInner.cloneNode(true);
     let itemText = item.querySelector(".item-content");
     itemText.textContent = textArea.value;
     parent.appendChild(item);
+
+    deleteItem(item);
+    editItem(item);
 }
 
 // function createAndEditItems() {
