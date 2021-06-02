@@ -11,6 +11,10 @@ body {
     background-color: #43434b;
 }
 
+[hidden] {
+    display: none;
+}
+
 .container {
     width: 500px;
     margin: 0 auto;

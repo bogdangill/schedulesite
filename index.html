@@ -5,7 +5,7 @@
         <title>demo1</title>
         <link rel='stylesheet' href='index-style.css'>
     </head>
-    <body onload="initialFocus()" onclick="additionalFocus()">
+    <body>
         <div class="container">
             <header class="index-header">
                 <h1 class="index-h1">Список задач</h1>
@@ -25,7 +25,7 @@
                     </li> -->
                 </ol>
             </main>
-            <form class="planner-form">
+            <form class="planner-form" action="#" method="POST">
                 <label for="area"><strong>Введите план сюда:</strong></label>
                 <textarea class="main-textarea" name="area" id="area" rows='5' cols='50'>P.S. если нажать комбинацию ctrl + Enter, то тоже отправится</textarea>
                 <button class="btn-submit" type="submit">Добавить к списку</button>
@@ -33,7 +33,24 @@
             <footer>
                 <b>developer: <a href="https://github.com/bogdangill" target="_blank" title="on GitHub">bogdangill</a></b>
             </footer>
-        </div>   
+        </div>
+        <template id="plan-template">
+            <li class="plan-list-item">
+                <p class="item-content"></p>
+                <ul class="sub-list" hidden>                   
+                </ul>
+                <button class="close-button">x</button>
+                <button class="edit-button">/</button>
+                <button class="add-button">+</button>
+            </li>
+        </template>
+        <template id="subplan-template">
+            <li class="sub-item">
+                <span class="sub-item-content"></span>
+                <button class="sub-edit-button">/</button>
+                <button class="sub-close-button">x</button>
+            </li>
+        </template>
+        <script src="scripts/main.js"></script>   
     </body>
-<script src="../schedulesite/scripts/main.js"></script>
 </html>
