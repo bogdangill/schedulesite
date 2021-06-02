@@ -17,6 +17,40 @@ const MESSAGE = {
 let i = 0; //   /____ каунтеры для условных сценариев
 let x = 0; //   \
 
+function showInputDialog(message, textContainer) {
+    let input = prompt(message);
+
+    while (input === '' && input !== null) {
+        alert(MESSAGE.errorEmpty);
+        input = prompt(message);
+    }
+
+    if (textContainer !== undefined) {
+        
+        if ((input !== '') && (input !== null)) {
+            textContainer.textContent = input;
+        }
+    } else {
+        let content = input;
+        return content;
+    }
+}
+
+function addSubItem(parent) {
+    let addBtn = parent.querySelector(".add-button");
+
+    addBtn.addEventListener('click', () => {
+        let subText = showInputDialog(MESSAGE.subItemHint);
+        
+        if (subText !== '' && subText !== null) {
+            let subItemContainer = parent.querySelector(".sub-list");
+            subItemContainer.removeAttribute('hidden');
+            console.log(subText);
+            createItem(subPlanTemplate, subItemContainer, "sub-item-content", subText);
+        }
+    })
+}
+
 function deleteItem(parent) {
     let delBtn = parent.querySelector(".close-button");
 
@@ -30,28 +64,20 @@ function editItem(parent) {
     let itemContent = parent.querySelector(".item-content");
 
     editBtn.addEventListener('click', () => {
-        let text = prompt(MESSAGE.editHint);
-
-        if ((text !== '') && (text !== null)) {
-            itemContent.textContent = text;
-        }
-
-        while (text === '' && text !== null) {
-            alert(MESSAGE.errorEmpty);
-            text = prompt(MESSAGE.editHint);
-        }
+        showInputDialog(MESSAGE.editHint, itemContent);
     })
 }
 
-function createItem(template, parent) {
+function createItem(template, parent, textContainerClass, text) {
     let templateInner = template.children[0];
     let item = templateInner.cloneNode(true);
-    let itemText = item.querySelector(".item-content");
-    itemText.textContent = textArea.value;
+    let itemText = item.querySelector("."+textContainerClass);
+    itemText.textContent = text;
     parent.appendChild(item);
 
     deleteItem(item);
     editItem(item);
+    addSubItem(item);
 }
 
 // function createAndEditItems() {
@@ -181,5 +207,5 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
 
 plannerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    textArea.value !== '' ? createItem(planTemplate, planList) : alert(MESSAGE.errorEmpty);
+    textArea.value !== '' ? createItem(planTemplate, planList, "item-content", textArea.value) : alert(MESSAGE.errorEmpty);
 })
