@@ -3,9 +3,11 @@
 let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
 let textArea = document.querySelector(".main-textarea");
-let contentArea = document.querySelector("main")
+let contentArea = document.querySelector("main");
+let planTemplate = document.querySelector("#plan-template").content;
+let subPlanTemplate = document.querySelector("#subplan-template").content;
 
-const messages = {
+const MESSAGE = {
     errorEmpty: 'Пожалуйста, заполните поле ввода...',
     editHint: 'Редактируйте содержимое ячейки здесь: ',
     subItemHint: 'Введите содержимое подпункта: ',
@@ -15,119 +17,127 @@ const messages = {
 let i = 0; //   /____ каунтеры для условных сценариев
 let x = 0; //   \
 
-function createAndEditItems() {
+function createItem(template, parent) {
+    let templateInner = template.children[0];
+    let item = templateInner.cloneNode(true);
+    let itemText = item.querySelector(".item-content");
+    itemText.textContent = textArea.value;
+    parent.appendChild(item);
+}
 
-    let planListItem = document.createElement('li');
-    planList.append(planListItem);
-    planListItem.classList.add('plan-list-item');
+// function createAndEditItems() {
 
-    let itemContent = document.createElement('p');
-    planListItem.append(itemContent);
-    itemContent.classList.add('item-content');
-    itemContent.textContent = textArea.value;
-    textArea.value = '';
+//     // let planListItem = document.createElement('li');
+//     // planList.append(planListItem);
+//     // planListItem.classList.add('plan-list-item');
 
-    let closeButton = document.createElement('button');
-    planListItem.append(closeButton);
-    closeButton.classList.add('close-button');
-    closeButton.textContent = 'x';
+//     // let itemContent = document.createElement('p');
+//     // planListItem.append(itemContent);
+//     // itemContent.classList.add('item-content');
+//     // itemContent.textContent = textArea.value;
+//     // textArea.value = '';
 
-    let editButton = document.createElement('button');//кнопка для изменения содержимого ячейки
-    planListItem.append(editButton);
-    editButton.classList.add('edit-button');
+//     // let closeButton = document.createElement('button');
+//     // planListItem.append(closeButton);
+//     // closeButton.classList.add('close-button');
+//     // closeButton.textContent = 'x';
 
-    let addButton = document.createElement('button');
-    planListItem.append(addButton);
-    addButton.classList.add('add-button');
-    addButton.textContent = '+';
+//     // let editButton = document.createElement('button');//кнопка для изменения содержимого ячейки
+//     // planListItem.append(editButton);
+//     // editButton.classList.add('edit-button');
 
-    x++;
-    // console.log(x);
+//     // let addButton = document.createElement('button');
+//     // planListItem.append(addButton);
+//     // addButton.classList.add('add-button');
+//     // addButton.textContent = '+';
 
-    let subList = document.createElement('ul');
+//     x++;
+//     // console.log(x);
 
-    closeButton.onclick = function() {
-        planList.removeChild(planListItem);
-        x--;
-        // console.log(x);
-        if (x == 0) {
-            contentArea.classList.remove('index-main');
-        };
-    };
+//     let subList = document.createElement('ul');
 
-    editButton.onclick = function() {
-        //события по клику для изменения текстового содержимого ячейки плана
-        //сделал через диалоговые окна браузера, мб потом прикручу это через отдельный сценарий с разметкой и стилями
-        let edited = prompt(messages.editHint);
-        if ((edited != '') && (edited != null)) {
-            itemContent.textContent = edited;
-        };
-        for (;((edited == '') && (edited != null));) {
-            alert(messages.errorEmpty);
-            edited = prompt(messages.editHint);
-            if ((edited != '') && (edited != null)) {
-                itemContent.textContent = edited;
-            };
-        };
-    };
+//     closeButton.onclick = function() {
+//         planList.removeChild(planListItem);
+//         x--;
+//         // console.log(x);
+//         if (x == 0) {
+//             contentArea.classList.remove('index-main');
+//         };
+//     };
 
-    addButton.onclick = function() {
-        let addSub = prompt(messages.subItemHint);
+//     editButton.onclick = function() {
+//         //события по клику для изменения текстового содержимого ячейки плана
+//         //сделал через диалоговые окна браузера, мб потом прикручу это через отдельный сценарий с разметкой и стилями
+//         let edited = prompt(MESSAGE.editHint);
+//         if ((edited != '') && (edited != null)) {
+//             itemContent.textContent = edited;
+//         };
+//         for (;((edited == '') && (edited != null));) {
+//             alert(MESSAGE.errorEmpty);
+//             edited = prompt(MESSAGE.editHint);
+//             if ((edited != '') && (edited != null)) {
+//                 itemContent.textContent = edited;
+//             };
+//         };
+//     };
 
-        for(;((addSub != null) && (addSub == ''));) {
-            alert(errorEmpty);
-            addSub = prompt(messages.subItemHint);
-            if ((addSub != null) && (addSub != '')) break;
-        };
+//     addButton.onclick = function() {
+//         let addSub = prompt(MESSAGE.subItemHint);
 
-        if (addSub == null) return;
+//         for(;((addSub != null) && (addSub == ''));) {
+//             alert(errorEmpty);
+//             addSub = prompt(MESSAGE.subItemHint);
+//             if ((addSub != null) && (addSub != '')) break;
+//         };
 
-        planListItem.append(subList);
-        subList.classList.add('sub-list');
+//         if (addSub == null) return;
 
-        let subItem = document.createElement('li');
-        subList.append(subItem);
-        subItem.classList.add('sub-item');
+//         planListItem.append(subList);
+//         subList.classList.add('sub-list');
 
-        let itemContent = document.createElement('p');
-        subItem.append(itemContent);
-        itemContent.classList.add('sub-item-content');
-        itemContent.textContent = addSub;
-        i++;
+//         let subItem = document.createElement('li');
+//         subList.append(subItem);
+//         subItem.classList.add('sub-item');
 
-        let subClose = document.createElement('button');
-        subItem.append(subClose);
-        subClose.classList.add('sub-close-button');
-        subClose.textContent = 'x';
+//         let itemContent = document.createElement('p');
+//         subItem.append(itemContent);
+//         itemContent.classList.add('sub-item-content');
+//         itemContent.textContent = addSub;
+//         i++;
 
-        let subEdit = document.createElement('button');
-        subItem.append(subEdit);
-        subEdit.classList.add('sub-edit-button');
+//         let subClose = document.createElement('button');
+//         subItem.append(subClose);
+//         subClose.classList.add('sub-close-button');
+//         subClose.textContent = 'x';
 
-        subEdit.onclick = function() {
-            let edited = prompt(messages.subItemEdit);
-            if ((edited != '') && (edited != null)) {
-                itemContent.textContent = edited;
-            };
-            for (;((edited == '') && (edited != null));) {
-                alert(messages.errorEmpty);
-                edited = prompt(messages.subItemEdit);
-                if ((edited != '') && (edited != null)) {
-                    itemContent.textContent = edited;
-                };
-            };
-        };
+//         let subEdit = document.createElement('button');
+//         subItem.append(subEdit);
+//         subEdit.classList.add('sub-edit-button');
 
-        subClose.onclick = function() {
-            subList.removeChild(subItem);
-            i--;
-            // console.log(i);
-            if (i == 0) {
-                planListItem.removeChild(subList);
-            };
-        };
-    };
-};
+//         subEdit.onclick = function() {
+//             let edited = prompt(MESSAGE.subItemEdit);
+//             if ((edited != '') && (edited != null)) {
+//                 itemContent.textContent = edited;
+//             };
+//             for (;((edited == '') && (edited != null));) {
+//                 alert(MESSAGE.errorEmpty);
+//                 edited = prompt(MESSAGE.subItemEdit);
+//                 if ((edited != '') && (edited != null)) {
+//                     itemContent.textContent = edited;
+//                 };
+//             };
+//         };
+
+//         subClose.onclick = function() {
+//             subList.removeChild(subItem);
+//             i--;
+//             // console.log(i);
+//             if (i == 0) {
+//                 planListItem.removeChild(subList);
+//             };
+//         };
+//     };
+// };
 
 document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
     if (event.code == 'Enter' && event.ctrlKey) {
@@ -135,12 +145,12 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
             createAndEditItems();
         }
         else {
-            alert(messages.errorEmpty);
+            alert(MESSAGE.errorEmpty);
         };
     };
 });
 
 plannerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    textArea.value !== '' ? createAndEditItems() : alert(messages.errorEmpty);
+    textArea.value !== '' ? createItem(planTemplate, planList) : alert(MESSAGE.errorEmpty);
 })
