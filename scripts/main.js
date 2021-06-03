@@ -2,7 +2,7 @@
 
 let planList = document.querySelector(".plan-list");
 let plannerForm = document.querySelector(".planner-form");
-let textArea = document.querySelector(".main-textarea");
+let input = document.querySelector(".main-input");
 let contentArea = document.querySelector("main");
 let planTemplate = document.querySelector("#plan-template").content;
 let subPlanTemplate = document.querySelector("#subplan-template").content;
@@ -86,25 +86,14 @@ function createItem(data) {
     return item
 }
 
-document.addEventListener('keydown'/*при нажатии*/, function(event) { //добавляю сценарий-ивент на весь документ по нажатию комбинации ctrl + enter (p.s. metaKey - это клавиша windows или cmd у mac)
-    if (event.code == 'Enter' && event.ctrlKey) {
-        if (textArea.value != '') {
-            createAndEditItems();
-        }
-        else {
-            alert(MESSAGE.errorEmpty);
-        };
-    };
-});
-
 plannerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    if (textArea.value !== '') {
+    if (input.value !== '') {
         let newItem = createItem({
             template: planTemplate,
             textContainerClass: "item-content",
-            text: textArea.value,
+            text: input.value,
             parent: planList,
         });
 
@@ -112,7 +101,7 @@ plannerForm.addEventListener('submit', (evt) => {
         editItem(newItem, '.edit-button', '.item-content');
         addSubItem(newItem);
 
-        textArea.value = '';
+        input.value = '';
     } else {
         alert(MESSAGE.errorEmpty);
     }
