@@ -45,39 +45,48 @@ function addSubItem(parent) {
         if (subText !== '' && subText !== null) {
             let subItemContainer = parent.querySelector(".sub-list");
             subItemContainer.removeAttribute('hidden');
-            console.log(subText);
-            createItem(subPlanTemplate, subItemContainer, "sub-item-content", subText);
+
+            let newSubItem = createItem({
+                template: subPlanTemplate,
+                textContainerClass: "sub-item-content",
+                text: subText,
+                parent: subItemContainer,
+            });
+            deleteItem(newSubItem, '.sub-close-button');
+            editItem(newSubItem, '.sub-edit-button', '.sub-item-content');
         }
     })
 }
 
-function deleteItem(parent) {
-    let delBtn = parent.querySelector(".close-button");
+function deleteItem(parent, delBtnClass) {
+    let delBtn = parent.querySelector(delBtnClass);
 
     delBtn.addEventListener('click', function () {
         parent.remove();
     });
 }
 
-function editItem(parent) {
-    let editBtn = parent.querySelector(".edit-button");
-    let itemContent = parent.querySelector(".item-content");
+function editItem(parent, editBtnClass, itemContentClass) {
+    let editBtn = parent.querySelector(editBtnClass);
+    let itemContent = parent.querySelector(itemContentClass);
 
     editBtn.addEventListener('click', () => {
         showInputDialog(MESSAGE.editHint, itemContent);
     })
 }
 
-function createItem(template, parent, textContainerClass, text) {
+function createItem(data) {
+    let template = data.template;
     let templateInner = template.children[0];
-    let item = templateInner.cloneNode(true);
-    let itemText = item.querySelector("."+textContainerClass);
-    itemText.textContent = text;
-    parent.appendChild(item);
 
-    deleteItem(item);
-    editItem(item);
-    addSubItem(item);
+    let item = templateInner.cloneNode(true);
+    let itemText = item.querySelector("."+data.textContainerClass);
+    itemText.textContent = data.text;
+
+    let currentParent = data.parent;
+    currentParent.appendChild(item);
+
+    return item
 }
 
 // function createAndEditItems() {
@@ -207,5 +216,21 @@ document.addEventListener('keydown'/*при нажатии*/, function(event) { 
 
 plannerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    textArea.value !== '' ? createItem(planTemplate, planList, "item-content", textArea.value) : alert(MESSAGE.errorEmpty);
+
+    if (textArea.value !== '') {
+        let newItem = createItem({
+            template: planTemplate,
+            textContainerClass: "item-content",
+            text: textArea.value,
+            parent: planList,
+        });
+
+        deleteItem(newItem, '.close-button');
+        editItem(newItem, '.edit-button', '.item-content');
+        addSubItem(newItem);
+
+        textArea.value = '';
+    } else {
+        alert(MESSAGE.errorEmpty)
+    }
 })
