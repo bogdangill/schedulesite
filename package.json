@@ -1,0 +1,29 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "simple todo web app (SPA) with some custom design",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bogdangill/schedulesite.git"
+  },
+  "keywords": [
+    "todo",
+    "pet-project"
+  ],
+  "author": "bogdangill",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/bogdangill/schedulesite/issues"
+  },
+  "homepage": "https://github.com/bogdangill/schedulesite#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1"
+  }
+}
