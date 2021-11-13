@@ -8,6 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'app.bundle.js',
+        clean: true
     },
     
     devServer: {
@@ -17,7 +18,6 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'todo app',
             template: './src/template.html',
         })
     ],
@@ -45,7 +45,8 @@ module.exports = {
             },
             {
                 test: /\.svg$/i,
-                type: 'asset/resource'
+                loader: 'svg-sprite-loader'
+                // type: 'asset/resource'
             }
         ]
     }
