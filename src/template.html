@@ -1,12 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>todo app</title>
 </head>
-<body>
-    <h1 class="test">template</h1>
+<body class="app">
+    <header class="header app__header mt-6">
+        <div class="logo logo--app">
+            <svg viewBox="0 0 138 38">
+                <use xlink:href="#app-name"></use>
+            </svg>
+        </div>
+
+        <div class="dev">
+            <span class="dev__text">made by</span>
+            <div class="dev__separator"></div>
+            <div class="logo logo--dev">
+                <svg viewBox="0 0 40 40">
+                    <use xlink:href="#bogdangill"></use>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <main id="root" class="flex flex-col h-full">
+        <section class="app__description mt-6">
+            <h1 class="sr-only">Описание</h1>
+            <p>Данное веб-приложение поможет Вам создать простой нумерованный список задач с возможностью добавления подпунктов. Чтобы создать и добавить задачу в список, напишите ее в поле ввода и нажмите кнопку “Добавить”.</p>
+        </section>
+
+        <form class="todo-form mt-8" action="#" method="post">
+            <div class="todo-form__input-wrapper">
+                <textarea class="todo-form__textarea" name="todoInput" placeholder="Добавьте новый пункт..."></textarea>
+            </div>
+            <button class="btn-submit" type="submit">
+                <svg class="lg:hidden" viewBox="0 0 20 21">
+                    <use xlink:href="#plus"></use>
+                </svg>
+                <span class="sr-only lg:not-sr-only">Добавить</span>
+            </button>
+        </form>
+
+        <div class="container flex-auto p-4">
+            <section class="plans-container">
+                <h2 class="sr-only">Список задач</h2>
+            </section>
+        </div>
+    </main>
 </body>
 </html>

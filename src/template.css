@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color-abyss: #150E33;
+    --font-family: 'Roboto', sans-serif;
+}
+
+.app {
+    @apply flex flex-col h-screen;
+    font-family: var(--font-family);
+    background-color: white;
+
+    &__description {
+        @apply
+            container
+            text-sm
+            font-light;
+        color: darkslategray;
+    }
+}
+
+.header {
+    @apply 
+        container
+        flex
+        justify-between
+        items-center;
+    color: var(--color-abyss);
+}
+
+.logo {
+    color: inherit;
+
+    &--app {
+        @apply w-32;
+    }
+
+    &--dev {
+        @apply w-10 h-10;
+    }
+}
+
+.dev {
+    @apply flex items-center;
+    
+    &__separator {
+        @apply h-12 w-px;
+        background-color: var(--color-abyss);
+    }
+        
+    &__text {
+        @apply transform translate-x-3 -rotate-90;
+
+        font-size: 6px;
+        line-height: 10px;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: .36em;
+        color: inherit;
+    }
+}
+
+.todo-form {
+    @apply
+        container
+        flex;
+    
+    &__input-wrapper {
+        @apply
+            relative
+            flex-auto;
+        min-height: 48px;
+        background-color: white;
+    }
+
+    &__textarea {
+        @apply
+            absolute
+            resize-none
+            w-full
+            h-full
+            bg-white
+            p-3
+            text-base;
+
+        &:focus {
+            @apply outline-none shadow;
+        }
+
+        &::placeholder {
+            @apply font-thin;
+            color: slategray;
+        }
+    }
+}
+
+.btn-submit {
+    @apply
+        cursor-pointer 
+        text-white
+        text-lg
+        leading-4
+        tracking-widest
+        flex-initial
+        w-12
+        h-12
+        p-3.5;
+    background-color: darkseagreen;
+
+    &:hover {
+        background-color: mediumseagreen;
+    }
+
+    &:active {
+        background-color: seagreen;
+    }
+}
+
+.plans-container {
+    height: 100%;
+    background-color: whitesmoke;
+}
