@@ -1,0 +1,4 @@
+.tasks-list {
+    @apply list-none list-inside;
+    counter-reset: new-number;
+}
