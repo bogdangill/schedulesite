@@ -25,17 +25,17 @@
         </div>
     </header>
 
-    <main id="root" class="flex flex-col h-full">
+    <main id="root" class="app__root">
         <section class="app__description mt-6">
             <h1 class="sr-only">Описание</h1>
             <p>Данное веб-приложение поможет Вам создать простой нумерованный список задач с возможностью добавления подпунктов. Чтобы создать и добавить задачу в список, напишите ее в поле ввода и нажмите кнопку “Добавить”.</p>
         </section>
 
-        <form class="todo-form mt-8" action="#" method="post">
+        <form class="todo-form mt-8" id="todoForm" action="#" method="post">
             <div class="todo-form__input-wrapper">
-                <textarea class="todo-form__textarea" name="todoInput" placeholder="Добавьте новый пункт..."></textarea>
+                <textarea class="todo-form__textarea" id="todoInput" name="todoInput" placeholder="Добавьте новый пункт..."></textarea>
             </div>
-            <button class="btn-submit" type="submit">
+            <button class="btn btn--submit" type="submit">
                 <svg class="lg:hidden" viewBox="0 0 20 21">
                     <use xlink:href="#plus"></use>
                 </svg>
@@ -43,7 +43,7 @@
             </button>
         </form>
 
-        <div class="container flex-auto p-4">
+        <div class="container plans-outer m-4">
             <section class="plans-container">
                 <h2 class="sr-only">Список задач</h2>
             </section>

@@ -8,9 +8,20 @@
 }
 
 .app {
-    @apply flex flex-col h-screen;
+    @apply 
+        flex 
+        flex-col 
+        h-screen 
+        max-h-screen 
+        overflow-hidden;
     font-family: var(--font-family);
     background-color: white;
+
+    &__root {
+        @apply flex flex-col;
+        /* 4.5rem: 3rem(header's outer height) + 1.5rem(header's margin-top) */
+        height: calc(100% - 4.5rem);
+    }
 
     &__description {
         @apply
@@ -118,7 +129,13 @@
     }
 }
 
+.plans-outer {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 .plans-container {
     height: 100%;
     background-color: whitesmoke;
+    overflow-y: scroll;
 }
