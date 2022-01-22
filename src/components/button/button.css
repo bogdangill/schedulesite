@@ -1,0 +1,48 @@
+.btn {
+    @apply
+        grid
+        place-items-center 
+        text-white
+        text-lg
+        leading-4
+        tracking-wide;
+
+    &--submit {
+        @apply
+            flex-initial
+            w-12
+            h-12
+            p-3.5;
+        background-color: darkseagreen;
+
+        @media (min-width: 1024px) {
+            @apply w-40;
+        }
+
+        &:hover {
+            background-color: mediumseagreen;
+        }
+        &:active {
+            background-color: seagreen;
+        }
+    }
+
+    &--menu {
+        @apply
+            w-10
+            h-10;
+        background-color: cornflowerblue;
+
+        &:hover {
+            background-color: dodgerblue;
+        }
+
+        &:active {
+            background-color: royalblue;
+        }
+    
+        svg {
+            @apply w-5 h-5;
+        }
+    }
+}
